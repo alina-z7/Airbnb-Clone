@@ -24,11 +24,11 @@ app.get("/", (req, res) => {
 
 app.get("/testListening", (req, res) => {
     let exampleListing = new Listing({
-        title: "Example Title",
-        description: "Example Description",
+        title: "Neverland",
+        description: "A place where you never grow up.",
         price: 0,
-        location: "Example Location",
-        country: "Example Country"
+        location: "Sea of One Thousand Islands",
+        country: "USA"
     });
 })
 app.listen(PORT, () => {

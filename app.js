@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("../models/listing.js")
+const Listing = require("./models/listing")
 
-const MONGODB_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGODB_URL = "mongodb://127.0.0.1:27017/airbnb";
 const PORT = 7700;
 
 main()
@@ -18,19 +18,16 @@ async function main() {
     await mongoose.connect(MONGODB_URL)
 }
 
-app.get("/", (req, res) => {
-    res.send("Hi, I am root");
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({extended: true }));
+app.use(methodOverride("_method"));
+
+
+app.get("/listings", async (req, res) => {
+    const allListings = await Listing.find({});
 });
 
-app.get("/testListening", (req, res) => {
-    let exampleListing = new Listing({
-        title: "Neverland",
-        description: "A place where you never grow up.",
-        price: 0,
-        location: "Sea of One Thousand Islands",
-        country: "USA"
-    });
-})
 app.listen(PORT, () => {
     console.log(`server is listening to port ${PORT}`);
 })

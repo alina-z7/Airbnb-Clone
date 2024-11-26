@@ -26,7 +26,19 @@ app.use(methodOverride("_method"));
 
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
+    allListings.then((res) =>{
+        console.log(res);
+    })
+    // render react component
 });
+
+app.get("/listings/:LID", async (req, res) => {
+    let {listingID} = req.params
+    const matchListing = await Listing.findById(listingID)
+    // render react component
+})
+
+app.
 
 app.listen(PORT, () => {
     console.log(`server is listening to port ${PORT}`);

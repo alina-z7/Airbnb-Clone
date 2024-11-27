@@ -12,7 +12,7 @@ main()
     })
     .catch((err) => {
         console.log(err);
-    })
+    });
 
 async function main() {
     await mongoose.connect(MONGODB_URL)
@@ -32,13 +32,34 @@ app.get("/listings", async (req, res) => {
     // render react component
 });
 
-app.get("/listings/:LID", async (req, res) => {
-    let {listingID} = req.params
-    const matchListing = await Listing.findById(listingID)
+app.get("/listings/:id", async (req, res) => {
+    let {ID} = req.params;
+    const matchListing = await Listing.findById(ID);
     // render react component
-})
+});
 
-app.
+app.post("/listings", async (req, res) => {
+    const newListingInfo = req.body.listing;
+    const newListing = new Listing(newListingInfo);
+    await newListing.save();
+});
+
+app.get("/listings/:id/edit", async (req, res) => {
+    let {ID} = req.params;
+    const listing = await Listing.findById(ID);
+    // render react component
+});
+
+app.put("/listings/:id/update", async (req, res) => {
+    let {ID} = req.params;
+    Listing.findByIdAndUpdate(ID, {...req.body.listing});
+    // render react component
+});
+
+app.delete("/listings/:id/", async (req, res) => {
+    let {ID} = req.params;
+    Listing.findByIdAndDelete(ID, {...req.body.listing})
+});
 
 app.listen(PORT, () => {
     console.log(`server is listening to port ${PORT}`);
